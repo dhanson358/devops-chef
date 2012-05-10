@@ -1,0 +1,5 @@
+destination <%= @name %>_dest { file("<%= @destination[:file_name] %>")};
+
+filter f_<%= @name %>_program_filter { program("<%= @filter %>"); };
+
+log { source(src); filter(f_<%= @name %>_program_filter); destination(<%= @name %>_dest); };
