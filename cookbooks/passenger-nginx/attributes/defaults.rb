@@ -22,7 +22,6 @@ default[:nginx][:conf][:worker_connections] = 1024
 
 default[:nginx][:conf][:user] = "nobody"
 
-
 default[:nginx][:conf][:http][:include] = 'mime.types'
 default[:nginx][:conf][:http][:default_type] = 'application/octet-stream'
 default[:nginx][:conf][:http][:sendfile] = "on"

@@ -1,4 +1,4 @@
-default[:nginx][:version]      = "0.8.54"
+default[:nginx][:version]      = "1.2.0"
 
 case platform
 when "debian","ubuntu"

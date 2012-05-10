@@ -1,5 +1,6 @@
 #
 # Author::  Anthony Goddard (<anthony@anthonygoddard.com>)
+# Modified by:: David Hanson (<david@dhanson.org>)
 # Cookbook Name:: nginx-passenger
 # Recipe:: default
 #
@@ -22,7 +23,6 @@ package "libcurl4-openssl-dev"
 
 gem_package "passenger" do
   action :install
-# TODO version if version set
 end
 
 nginx_src = "/tmp/nginx-#{node[:nginx][:source][:version]}"
@@ -44,10 +44,7 @@ execute "compile nginx with passenger" do
     value === true ? compile_options << "--#{option}" : compile_options << "--#{option}=#{value}"
   end
   command "passenger-install-nginx-module --auto --prefix=#{node[:nginx][:prefix_dir]} --nginx-source-dir=#{nginx_src} --extra-configure-flags=\"#{compile_options.join(" ")}\""
-  # notifies :restart, resources(:service => "nginx")
-  creates "#{node[:nginx][:prefix_dir]}/sbin/nginx"
-  # not_if "nginx -V"
-  # TODO add check for specific passenger version here
+  not_if "nginx -V 2>&1 |grep passenger-#{node[:passenger][:version]}"
 end
 
 directory node[:nginx][:base_dir] do
