@@ -1,0 +1,5 @@
+maintainer       "David Hanson"
+maintainer_email "david@dhanson.org"
+license          "Apache 2.0"
+description      "Installs/Configures stubs for passenger apps"
+version          "0.0.1"

@@ -12,7 +12,9 @@
       "recipe[rvm::system]",
 			"recipe[mysql::client]",
       "recipe[git::default]",
-			"recipe[passenger-nginx]"
+			"recipe[rubygems::client]",
+			"recipe[passenger-nginx]",
+			"recipe[application::hvs]"
     ],
     "description": "Rails App Server",
     "chef_type": "role",
