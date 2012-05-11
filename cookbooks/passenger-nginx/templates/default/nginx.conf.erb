@@ -17,7 +17,7 @@ events {
 http {
     include       mime.types;
     default_type  application/octet-stream;
-		passenger_root <%= node[:rvm][:root_path] %>/gems/<%= node[:rvm][:default_ruby] %>/gems/<%= node[:passenger][:version] %>;
+		passenger_root <%= node[:rvm][:root_path] %>/gems/<%= node[:rvm][:default_ruby] %>/gems/passenger-<%= node[:passenger][:version] %>;
 		passenger_ruby	<%= node[:rvm][:root_path] %>/wrappers/<%= node[:rvm][:default_ruby] %>/ruby;
 
     sendfile        on;
@@ -28,24 +28,6 @@ http {
 
     #gzip  on;
 
-    server {
-        listen       80;
-        server_name  localhost;
-
-        location / {
-            root   html;
-            index  index.html index.htm;
-        }
-
-        #error_page  404              /404.html;
-
-        # redirect server error pages to the static page /50x.html
-        #
-        error_page   500 502 503 504  /50x.html;
-        location = /50x.html {
-            root   html;
-        }
-
-    }
+    include /etc/nginx/sites-enabled/*;
 
 }

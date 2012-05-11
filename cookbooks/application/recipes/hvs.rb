@@ -5,12 +5,16 @@ app_name = "hvs"
 
 app_path = node[:application][:root_path] + '/' + app_name
 
-directory app_path do
-  owner "root"
-  group "root"
-  mode "0755"
-  recursive true
-  action :create
+directories = [app_path, node[:application][:root_path]+'/deploy/'+app_name+'/releases', node[:application][:root_path]+'/deploy/'+app_name+'/log', node[:application][:root_path]+'/deploy/'+app_name+'/shared']
+
+directories.each do |d|
+  directory d do
+    owner "root"
+    group "root"
+    mode "0777"
+    recursive true
+    action :create
+  end
 end
 
 template "/etc/nginx/sites-enabled/#{app_name}" do

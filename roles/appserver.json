@@ -10,6 +10,7 @@
       "recipe[build-essential::default]",
       "recipe[apt]",
       "recipe[rvm::system]",
+      "recipe[rvm::user]",
 			"recipe[mysql::client]",
       "recipe[git::default]",
 			"recipe[rubygems::client]",

@@ -25,6 +25,7 @@ gem_package "passenger" do
   action :install
 end
 
+
 nginx_src = "/tmp/nginx-#{node[:nginx][:source][:version]}"
 
 # download nginx source
@@ -43,11 +44,18 @@ execute "compile nginx with passenger" do
   node[:nginx][:compile_options].each do |option,value|
     value === true ? compile_options << "--#{option}" : compile_options << "--#{option}=#{value}"
   end
-  command "passenger-install-nginx-module --auto --prefix=#{node[:nginx][:prefix_dir]} --nginx-source-dir=#{nginx_src} --extra-configure-flags=\"#{compile_options.join(" ")}\""
+  command "/usr/local/rvm/gems/ruby-1.9.3-p125/bin/passenger-install-nginx-module --auto --prefix=#{node[:nginx][:prefix_dir]} --nginx-source-dir=#{nginx_src} --extra-configure-flags=\"#{compile_options.join(" ")}\""
   not_if "nginx -V 2>&1 |grep passenger-#{node[:passenger][:version]}"
 end
 
 directory node[:nginx][:base_dir] do
+  owner "root"
+  group "root"
+  mode "0755"
+  action :create
+end
+
+directory "/etc/nginx/sites-enabled" do
   owner "root"
   group "root"
   mode "0755"
