@@ -11,6 +11,7 @@
       "recipe[apt]",
       "recipe[rvm::system]",
       "recipe[rvm::user]",
+			"recipe[syslog-ng]",						
 			"recipe[mysql::client]",
       "recipe[git::default]",
 			"recipe[rubygems::client]",
