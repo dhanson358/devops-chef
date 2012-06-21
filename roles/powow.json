@@ -1,0 +1,21 @@
+{
+    "name": "powow",
+    "default_attributes": {
+		 "platform": "ubuntu",
+		 "user": "ubuntu",
+		 "group": "ubuntu",
+		 "logrotate": {
+			"services": [
+				"nginx", "powow"
+			]
+		}
+    },
+    "json_class": "Chef::Role",
+    "run_list": [
+			"recipe[application::powow]"
+    ],
+    "description": "Powow App Server",
+    "chef_type": "role",
+    "override_attributes": {
+    }
+}
