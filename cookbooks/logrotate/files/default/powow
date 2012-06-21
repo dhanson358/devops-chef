@@ -1,0 +1,12 @@
+/srv/powow-ruby/log/*.log {
+        rotate 10
+        weekly
+        missingok
+        create 640 ubuntu ubuntu
+        notifempty
+        compress
+        delaycompress
+        postrotate
+                touch /srv/powow-ruby/tmp/restart.txt
+        endscript
+}
