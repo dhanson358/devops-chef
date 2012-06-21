@@ -19,6 +19,10 @@
 # limitations under the License.
 #
 
+#
+# 
+#
+
 package "libcurl4-openssl-dev"
 
 gem_package "passenger" do
@@ -39,10 +43,29 @@ execute "extract nginx" do
   not_if { File.exists?(nginx_src) }
 end
 
+
+node[:nginx][:source][:modules].each do |k,nmodule|
+
+  # download module source
+  remote_file "/tmp/#{nmodule[:name]}.tar.gz" do
+    source "#{nmodule[:src]}"
+  end
+
+  # extract module source
+  execute "extract nginx #{nmodule[:name]} module" do
+    command "tar -C /tmp -xzf /tmp/#{nmodule[:name]}.tar.gz"
+    not_if { File.exists?("/tmp/#{nmodule[:name]}") }
+  end
+
+end
+
 execute "compile nginx with passenger" do
   compile_options = Array.new
   node[:nginx][:compile_options].each do |option,value|
     value === true ? compile_options << "--#{option}" : compile_options << "--#{option}=#{value}"
+  end
+  node[:nginx][:source][:modules].each do |name,nmodule|
+    compile_options << "--add-module=/tmp/#{nmodule[:name]}"
   end
   command "/usr/local/rvm/gems/ruby-1.9.3-p125/bin/passenger-install-nginx-module --auto --prefix=#{node[:nginx][:prefix_dir]} --nginx-source-dir=#{nginx_src} --extra-configure-flags=\"#{compile_options.join(" ")}\""
   not_if "nginx -V 2>&1 |grep passenger-#{node[:passenger][:version]}"

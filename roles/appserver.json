@@ -3,20 +3,25 @@
     "default_attributes": {
 		 "platform": "ubuntu",
 		 "user": "ubuntu",
-		 "group": "ubuntu"
+		 "group": "ubuntu",
+		 "logrotate": {
+			"services": [
+				"nginx"
+			]
+		}
     },
     "json_class": "Chef::Role",
     "run_list": [
-      "recipe[build-essential::default]",
-      "recipe[apt]",
-      "recipe[rvm::system]",
-      "recipe[rvm::user]",
-			"recipe[syslog-ng]",						
-			"recipe[mysql::client]",
-      "recipe[git::default]",
-			"recipe[rubygems::client]",
-			"recipe[passenger-nginx]",
-			"recipe[application::hvs]"
+		"recipe[build-essential::default]",
+		"recipe[apt]",
+		"recipe[rvm::system]",
+		"recipe[rvm::user]",
+		"recipe[syslog-ng]",						
+		"recipe[mysql::client]",
+      	"recipe[git::default]",
+		"recipe[rubygems::client]",
+		"recipe[passenger-nginx]",
+		"recipe[logrotate]"
     ],
     "description": "Rails App Server",
     "chef_type": "role",
