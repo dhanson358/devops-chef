@@ -34,6 +34,6 @@ node[:syslog][:scripts].each do |scriptname,metadata|
 end
 
 service "syslog-ng" do
-  supports :status => true, :restart => true, :reload => true
+    supports :status => true, :enable => true, :restart => true, :reload => true
   action [ :enable, :start ]
 end

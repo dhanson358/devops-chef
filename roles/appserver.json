@@ -14,9 +14,10 @@
     "run_list": [
 		"recipe[build-essential::default]",
 		"recipe[apt]",
+		"recipe[syslog-ng]",
 		"recipe[rvm::system]",
 		"recipe[rvm::user]",
-		"recipe[syslog-ng]",						
+		"recipe[rvm::gem_package]",
 		"recipe[mysql::client]",
       	"recipe[git::default]",
 		"recipe[rubygems::client]",
