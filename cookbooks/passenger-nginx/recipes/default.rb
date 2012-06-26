@@ -25,11 +25,9 @@
 
 package "libcurl4-openssl-dev"
 
-
 gem_package "passenger" do
   action :install
 end
-
 
 nginx_src = "/tmp/nginx-#{node[:nginx][:source][:version]}"
 
@@ -68,7 +66,7 @@ execute "compile nginx with passenger" do
   node[:nginx][:source][:modules].each do |name,nmodule|
     compile_options << "--add-module=/tmp/#{nmodule[:name]}"
   end
-  command "passenger-install-nginx-module --auto --prefix=#{node[:nginx][:prefix_dir]} --nginx-source-dir=#{nginx_src} --extra-configure-flags=\"#{compile_options.join(" ")}\""
+  command "export PATH=/usr/local/rvm/gems/ruby-1.9.3-p125/bin:/usr/local/rvm/gems/ruby-1.9.3-p125@global/bin:/usr/local/rvm/rubies/ruby-1.9.3-p125/bin:/usr/local/rvm/bin:$PATH && passenger-install-nginx-module --auto --prefix=#{node[:nginx][:prefix_dir]} --nginx-source-dir=#{nginx_src} --extra-configure-flags=\"#{compile_options.join(" ")}\""
   not_if "nginx -V 2>&1 |grep passenger-#{node[:passenger][:version]}"
 end
 
