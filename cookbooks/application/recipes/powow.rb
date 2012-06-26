@@ -9,8 +9,8 @@ directories = [app_path, node[:application][:root_path]+'/deploy/'+app_name+'/re
 
 directories.each do |d|
   directory d do
-    owner "root"
-    group "root"
+    owner "ubuntu"
+    group "ubuntu"
     mode "0777"
     recursive true
     action :create

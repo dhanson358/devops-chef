@@ -35,3 +35,7 @@ if node['rvm']['group_users'].any?
     members node['rvm']['group_users']
   end
 end
+
+execute "set as system ruby" do
+  command "update-alternatives --install /usr/bin/ruby ruby /usr/local/rvm/bin/ruby-1.9.3-p125 400"
+end
