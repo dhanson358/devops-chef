@@ -17,7 +17,6 @@
 		"recipe[syslog-ng]",
 		"recipe[rvm::system]",
 		"recipe[rvm::user]",
-		"recipe[rvm::gem_package]",
 		"recipe[mysql::client]",
       	"recipe[git::default]",
 		"recipe[rubygems::client]",
