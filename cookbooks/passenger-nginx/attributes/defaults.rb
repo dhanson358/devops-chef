@@ -39,10 +39,10 @@ default[:nginx][:compile_options]['with-http_ssl_module'] = true
 default[:nginx][:compile_options]['with-http_gzip_static_module'] = true
 default[:nginx][:compile_options]['with-file-aio'] = true
 
-default[:nginx][:conf][:worker_processes] = 1
+default[:nginx][:conf][:worker_processes] = 4
 default[:nginx][:conf][:worker_connections] = 1024
 
-default[:nginx][:conf][:user] = "nobody"
+default[:nginx][:conf][:user] = "www-data"
 
 default[:nginx][:conf][:http][:include] = 'mime.types'
 default[:nginx][:conf][:http][:default_type] = 'application/octet-stream'

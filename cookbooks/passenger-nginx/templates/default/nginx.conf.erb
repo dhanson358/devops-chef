@@ -1,16 +1,13 @@
 
-#user  nobody;
+user  <%= node[:nginx][:compile_options]['user'] %>;
 worker_processes  <%= node[:nginx][:conf][:worker_processes] %>;
+worker_rlimit_nofile 100000;
+pid <%= node[:nginx][:compile_options]['pid-path'] %>;
 
-#error_log  logs/error.log;
-#error_log  logs/error.log  notice;
-#error_log  logs/error.log  info;
-
-#pid        logs/nginx.pid;
 
 
 events {
-    worker_connections  1024;
+    worker_connections  8192;
 }
 
 
@@ -21,12 +18,28 @@ http {
 		passenger_ruby	<%= node[:rvm][:root_path] %>/wrappers/<%= node[:rvm][:default_ruby] %>/ruby;
 
     sendfile        on;
-    #tcp_nopush     on;
+    tcp_nopush      on;
+	tcp_nodelay     on;
 
-    #keepalive_timeout  0;
     keepalive_timeout  65;
+	types_hash_max_size 2048;
 
     #gzip  on;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+            '$status $body_bytes_sent "$http_referer" '
+            '"$http_user_agent" "$http_x_forwarded_for" "$host"';
+
+    log_format detailed '$time_local '
+            '$upstream_cache_status '
+            'Cache-Control: $upstream_http_cache_control '
+            'Expires: $upstream_http_expires '
+            '"$scheme://$host" "$request" ($status) '
+            '"$http_user_agent" '
+            '$upstream_response_time $request_time $request_length $body_bytes_sent - $remote_addr $upstream_addr "$uri$args"';
+
+    access_log /var/log/nginx/access.log main;
+    error_log /var/log/nginx/error.log;
 
     include /etc/nginx/sites-enabled/*;
 

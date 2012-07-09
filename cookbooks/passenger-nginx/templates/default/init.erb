@@ -1,4 +1,4 @@
-! /bin/sh
+#!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          nginx
 # Required-Start:    $remote_fs $syslog
@@ -67,7 +67,7 @@
 #                               Consts
 #------------------------------------------------------------------------------
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/local/sbin/nginx
+DAEMON=<%= node[:nginx][:compile_options]['sbin-path'] %>
  
 PS="nginx"
 PIDNAME="nginx"				#lets you do $PS-slave
@@ -75,7 +75,7 @@ PIDFILE=<%= node[:nginx][:compile_options]['pid-path'] %>                    #pi
  
 DESCRIPTION="Nginx Server..."
  
-RUNAS=root                              #user to run as
+RUNAS=<%= node[:nginx][:compile_options]['user']  %>                           #user to run as
  
 SCRIPT_OK=0                             #ala error codes
 SCRIPT_ERROR=1                          #ala error codes
@@ -83,7 +83,7 @@ TRUE=1                                  #boolean
 FALSE=0                                 #boolean
  
 lockfile=/var/lock/subsys/nginx
-NGINX_CONF_FILE="/usr/local/nginx/conf/nginx.conf"
+NGINX_CONF_FILE=<%= node[:nginx][:compile_options]['conf-path'] %>
  
 #------------------------------------------------------------------------------
 #                               Simple Tests
