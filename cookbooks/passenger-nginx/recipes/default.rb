@@ -84,13 +84,13 @@ directory "/etc/nginx/sites-enabled" do
   action :create
 end
 
-# # write the init script
-# template "/etc/init.d/nginx" do
-#   source "init.erb"
-#   mode '0755'
-#   owner 'root'
-#   group 'root'
-# end
+# write the init script
+template "/etc/init.d/nginx" do
+  source "init.erb"
+  mode '0755'
+  owner 'root'
+  group 'root'
+end
 
 # write the init script
 template "/etc/nginx/nginx.conf" do
